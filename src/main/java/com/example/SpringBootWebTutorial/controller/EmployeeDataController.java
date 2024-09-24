@@ -1,8 +1,8 @@
 package com.example.SpringBootWebTutorial.controller;
 
+import com.example.SpringBootWebTutorial.dto.EmployeeDTO;
 import com.example.SpringBootWebTutorial.entity.EmployeeEntity;
-import com.example.SpringBootWebTutorial.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.SpringBootWebTutorial.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,25 +11,30 @@ import java.util.List;
 @RequestMapping(path = "/employees")
 public class EmployeeDataController {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeDataController(EmployeeRepository employeeRepository){
-        this.employeeRepository = employeeRepository;
+    public EmployeeDataController(EmployeeService employeeService){
+        this.employeeService = employeeService;
     }
 
     @GetMapping(path = "/{employeeid}")
-    public EmployeeEntity getEmployeeBYId(@PathVariable (name = "employeeid")Long id){
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeDTO getEmployeeBYId(@PathVariable (name = "employeeid")Long id){
+        //EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
+        //ModelMapper modelMapper = new ModelMapper();
+        //return employeeRepository.findById(id).orElse(null);
+        //return modelMapper.map(employeeEntity, EmployeeDTO.class);
+        return employeeService.getEmployeeById(id);
     }
 
     @GetMapping
-    public List<EmployeeEntity> getAllEmployee(){
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployee(){
+        return employeeService.getAllEmployee();
     }
 
+
     @PostMapping
-    public EmployeeEntity createNewEmployee(@RequestBody EmployeeEntity employeeEntity){
-        return employeeRepository.save(employeeEntity);
+    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO employeeEntity){
+        return employeeService.createNewEmployee(employeeEntity);
     }
 
 }
