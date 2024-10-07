@@ -1,5 +1,7 @@
 package com.example.SpringBootWebTutorial.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class EmployeeDTO {
@@ -8,7 +10,7 @@ public class EmployeeDTO {
     private String name;
     private String email;
     private Integer age;
-    private LocalDate dataOfJoining;
+    private LocalDate dateOfJoining;
     private Boolean isActive;
 
     public Long getId() {
@@ -43,12 +45,12 @@ public class EmployeeDTO {
         this.age = age;
     }
 
-    public LocalDate getDataOfJoining() {
-        return dataOfJoining;
+    public LocalDate getDateOfJoining() {
+        return dateOfJoining;
     }
 
-    public void setDataOfJoining(LocalDate dataOfJoining) {
-        this.dataOfJoining = dataOfJoining;
+    public void setDateOfJoining(LocalDate dateOfJoining) {
+        this.dateOfJoining = dateOfJoining;
     }
 
     public String getName() {
@@ -65,7 +67,7 @@ public class EmployeeDTO {
     public EmployeeDTO(Long id, Boolean isActive, LocalDate dataOfJoining, Integer age, String email, String name) {
         this.id = id;
         this.isActive = isActive;
-        this.dataOfJoining = dataOfJoining;
+        this.dateOfJoining = dataOfJoining;
         this.age = age;
         this.email = email;
         this.name = name;

@@ -1,0 +1,13 @@
+2024-10-05 20:37:34.419439+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]EMPLOYEE desc"; expected "EXPLAIN, EXECUTE"; SQL statement:
+EMPLOYEE desc [42001-224]
+2024-10-05 20:38:00.226824+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM EMPLOYEE \000d\000adesc [*]EMPLOYEE"; SQL statement:
+SELECT * FROM EMPLOYEE 
+desc EMPLOYEE [42000-224]
+2024-10-05 20:38:05.329445+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]desc EMPLOYEE"; expected "DELETE, DROP"; SQL statement:
+desc EMPLOYEE [42001-224]
+2024-10-05 20:38:06.122041+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]desc EMPLOYEE"; expected "DELETE, DROP"; SQL statement:
+desc EMPLOYEE [42001-224]
