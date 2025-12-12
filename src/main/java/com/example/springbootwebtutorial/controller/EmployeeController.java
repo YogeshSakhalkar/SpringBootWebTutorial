@@ -5,6 +5,7 @@ import com.example.springbootwebtutorial.entites.EmployeeEntity;
 import com.example.springbootwebtutorial.repository.EmployeeRepository;
 import com.example.springbootwebtutorial.service.EmployeeService;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> saveEmployeeData(@RequestBody EmployeeEntity employeedata){
+    public ResponseEntity<EmployeeDto> saveEmployeeData(@RequestBody @Valid EmployeeDto employeedata){
  //       return employeeService.saveEmployeeData(employeedata);
         EmployeeDto savedEmployee = employeeService.saveEmployeeData(employeedata);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
@@ -70,7 +71,7 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{employeeId}")
-    public ResponseEntity<EmployeeDto> updateEmployeeDataById(@RequestBody EmployeeDto employeeEntity,
+    public ResponseEntity<EmployeeDto> updateEmployeeDataById(@RequestBody @Valid EmployeeDto employeeEntity,
                                               @PathVariable Long employeeId){
  //       return employeeService.updateEmployeeById(employeeId, employeeEntity);
         return ResponseEntity.ok((employeeService.updateEmployeeById(employeeId, employeeEntity)));

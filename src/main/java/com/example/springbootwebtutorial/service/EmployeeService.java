@@ -3,6 +3,7 @@ package com.example.springbootwebtutorial.service;
 import com.example.springbootwebtutorial.dto.EmployeeDto;
 import com.example.springbootwebtutorial.entites.EmployeeEntity;
 import com.example.springbootwebtutorial.repository.EmployeeRepository;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class EmployeeService {
         return modelMapper.map(employeeEntity, EmployeeDto.class);
     }
 
-    public EmployeeDto saveEmployeeData(EmployeeEntity employeeData) {
+    public EmployeeDto saveEmployeeData( EmployeeDto employeeData) {
         EmployeeEntity toSaveEntity = modelMapper.map(employeeData, EmployeeEntity.class);
         EmployeeEntity employeeEntity = employeeRepository.save(toSaveEntity);
         return modelMapper.map(employeeEntity, EmployeeDto.class);
