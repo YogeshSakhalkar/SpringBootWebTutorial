@@ -30,4 +30,10 @@ public class EmployeeEntity {
     private Boolean isActive;
 
     private LocalDate dateOfJoining;
+
+    private String email;
+
+    private String role;
+
+    private Double salary;
 }
