@@ -1,5 +1,6 @@
 package com.example.springbootwebtutorial.controller;
 
+import com.example.springbootwebtutorial.advices.ResourceNotFoundException;
 import com.example.springbootwebtutorial.dto.EmployeeDto;
 import com.example.springbootwebtutorial.entites.EmployeeEntity;
 import com.example.springbootwebtutorial.repository.EmployeeRepository;
@@ -11,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/employee")
@@ -39,7 +37,8 @@ public class EmployeeController {
 //            return employeeService.findById(id);
         Optional<EmployeeDto> employeeDto = Optional.ofNullable(employeeService.findById(id));
         return employeeDto.map(employeeDto1 -> ResponseEntity.ok(employeeDto1))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(()->new ResourceNotFoundException("Employee Not Found with Id :"+id));
+                //.orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -56,8 +55,14 @@ public class EmployeeController {
     }
 
     @DeleteMapping
-    public Boolean deleteEmployeeById(Long employeeId){
-        return employeeService.deleteEmployeeById(employeeId);
+    public ResponseEntity<String> deleteEmployeeById(Long employeeId){
+
+        Boolean exist = employeeService.deleteEmployeeById(employeeId);
+        if(exist){
+            return ResponseEntity.status(HttpStatus.OK).body("Employee Data deleted successfully");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee id not found");
+        }
     }
 
     @PatchMapping(path = "/{employeeId}")
