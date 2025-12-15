@@ -14,27 +14,30 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFoundException exceptiom){
+    public ResponseEntity<ApiResponse<?>> handleResourceNotFound(ResourceNotFoundException exceptiom){
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .message(exceptiom.getMessage())
                 .build();
-        return new ResponseEntity<>(apiError,HttpStatus.NOT_FOUND);
+        return buildErrorResponseEntity(apiError);
+        //return new ResponseEntity<>(apiError,HttpStatus.NOT_FOUND);
         //return new ResponseEntity<>("Resource Not Found", HttpStatus.NOT_FOUND);
     }
 
 
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handleInternalServerError(Exception exception){
+    public ResponseEntity<ApiResponse<?>> handleInternalServerError(Exception exception){
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message(exception.getMessage())
                 .build();
-        return new ResponseEntity<>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
+        return buildErrorResponseEntity(apiError);
+        //return new ResponseEntity<>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
-    public ResponseEntity<ApiError> handleInputValidationError(MethodArgumentNotValidException exception){
+    public ResponseEntity<ApiResponse<?>> handleInputValidationError(MethodArgumentNotValidException exception){
         List<String> errors = exception.getBindingResult()
                 .getAllErrors()
                 .stream()
@@ -47,7 +50,12 @@ public class GlobalExceptionHandler {
                 .subError(errors)
                 .build();
 
-        return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
+        return buildErrorResponseEntity(apiError);
+       // return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<ApiResponse<?>> buildErrorResponseEntity(ApiError apiError){
+        return new ResponseEntity<>(new ApiResponse<>(apiError),apiError.getStatus());
     }
 }
 
