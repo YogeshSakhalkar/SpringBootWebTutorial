@@ -55,8 +55,8 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findAll());
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteEmployeeById(Long employeeId){
+    @DeleteMapping(path = "{employeeId}")
+    public ResponseEntity<String> deleteEmployeeById(@PathVariable Long employeeId){
 
         Boolean exist = employeeService.deleteEmployeeById(employeeId);
         if(exist){
